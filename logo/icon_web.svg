@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 42 42">
+  <defs>
+    <!-- Gradient batang: biru tua di bawah → biru terang di atas -->
+    <linearGradient id="briBar" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%"   stop-color="#1e40af"/>
+      <stop offset="100%" stop-color="#60a5fa"/>
+    </linearGradient>
+
+    <!-- Gradient panah: hijau tua → hijau muda -->
+    <linearGradient id="briArrow" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#059669"/>
+      <stop offset="55%"  stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#a7f3d0"/>
+    </linearGradient>
+
+    <!-- Arrowhead serasi dengan gradient panah -->
+    <marker id="briArrowHead" viewBox="0 0 10 10" refX="9" refY="5"
+            markerUnits="userSpaceOnUse" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0 1 L10 5 L0 9 Z" fill="#a7f3d0"/>
+    </marker>
+  </defs>
+
+  <!-- Latar -->
+  <rect width="42" height="42" rx="10" fill="#1C1712"/>
+
+  <!-- Batang: tinggi naik-turun lalu melonjak (lebih hidup) -->
+  <rect x="8"  y="26" width="4.5" height="9"  rx="1.5" fill="url(#briBar)" opacity="0.85"/>
+  <rect x="15" y="22" width="4.5" height="13" rx="1.5" fill="url(#briBar)" opacity="0.92"/>
+  <rect x="22" y="24" width="4.5" height="11" rx="1.5" fill="url(#briBar)" opacity="0.96"/>
+  <rect x="29" y="18" width="4.5" height="17" rx="1.5" fill="url(#briBar)"/>
+
+  <!-- Panah melengkung elegan (2 cubic bezier, S-shape mengikuti tren) -->
+  <path d="M7 25 C 12 23, 15 16, 21 18 C 27 20, 30 12, 33 10"
+        fill="none" stroke="url(#briArrow)" stroke-width="1.8"
+        stroke-linecap="round" stroke-linejoin="round"
+        marker-end="url(#briArrowHead)"/>
+
+  <!-- Titik data: awal & titik belok -->
+  <circle cx="7"  cy="25" r="1.4" fill="#34d399"/>
+  <circle cx="21" cy="18" r="1.2" fill="#6ee7b7"/>
+</svg>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BCA IDX — Live Market Console</title>
+  <!-- diubah: favicon dari file icon_web.svg -->
+  <link rel="icon" type="image/svg+xml" href="logo/icon_web.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Archivo:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="src/styles.css">
+</head>
+
+<body>
+  <div class="grain"></div>
+
+  <header>
+    <div class="brand">
+      <!-- diubah: logo dari file icon_web.svg -->
+      <img src="logo/icon_web.svg" width="42" height="42" alt="Logo BCA IDX">
+      <div class="brand-txt">
+        <h1>BCA
+          <span style="color: #a56d25;font-size: medium;">IDX</span>
+        </h1>
+        <p>Market Console <b>·</b> <b style="color:var(--up)">LIVE</b> · BBCA.JK</p>
+      </div>
+
+    </div>
+    <div class="hd-right">
+      <!-- lencana status sumber data (live/simulasi) -->
+      <span id="liveBadge" class="live-badge loading"><i></i>MEMUAT DATA PASAR…</span>
+      <div class="clock">
+        <span id="clockDate">—</span>
+        <span id="clockTime">—</span>
+      </div>
+      <div class="seg" role="group" aria-label="Periode data">
+        <button class="active" data-d="7">7H</button>
+        <button data-d="30">30H</button>
+        <button data-d="90">90H</button>
+      </div>
+
+      <!-- Tombol ekspor dengan dua pilihan format -->
+      <div class="export-wrap" id="exportWrap">
+        <button class="btn-ink" id="exportBtn" aria-haspopup="true" aria-expanded="false">
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 1.5v7.5M3.8 6 7 9.2 10.2 6M1.8 12.5h10.4" />
+          </svg>
+          Download (CSV/XLSX)
+          <svg class="caret" width="9" height="9" viewBox="0 0 10 10" fill="none" stroke="currentColor"
+            stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 3.5 5 6.5 8 3.5" />
+          </svg>
+        </button>
+        <div class="export-menu" id="exportMenu" hidden>
+          <button class="exp-opt" id="optCsv">
+            <span class="ic" style="background:rgba(209,74,30,.2)">
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#E98B62" stroke-width="1.4"
+                stroke-linejoin="round">
+                <path d="M3.5 1.5h6L13 5v9.5H3.5z" />
+                <path d="M9.5 1.5V5H13" />
+              </svg>
+            </span>
+            <span><b>CSV</b><small>Spreadsheet · pemisah ; · siap Excel ID</small></span>
+            <svg class="dl" width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor"
+              stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 1.5v7.5M3.8 6 7 9.2 10.2 6M1.8 12.5h10.4" />
+            </svg>
+          </button>
+          <button class="exp-opt" id="optXlsx">
+            <span class="ic" style="background:rgba(46,107,74,.24)">
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#7FBF9A" stroke-width="1.4"
+                stroke-linejoin="round">
+                <path d="M3.5 1.5h6L13 5v9.5H3.5z" />
+                <path d="M9.5 1.5V5H13" />
+                <path d="M5.6 8.2l4 3.6M9.6 8.2l-4 3.6" />
+              </svg>
+            </span>
+            <span><b>XLSX</b><small>Workbook Excel · 5 sheet terpisah</small></span>
+            <svg class="dl" width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor"
+              stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 1.5v7.5M3.8 6 7 9.2 10.2 6M1.8 12.5h10.4" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="ticker">
+    <div class="ticker-track" id="tickerTrack"></div>
+  </div>
+
+  <main>
+    <!-- 01 · Chart utama -->
+    <section class="panel panel-chart">
+      <div class="panel-head">
+        <span class="pnum">01</span>
+        <h2>Nilai Transaksi Harian — BBCA</h2>
+        <div class="head-extra legend">
+          <button class="lg active" data-s="online"><i class="sw on"></i>Sesi I</button>
+          <button class="lg active" data-s="store"><i class="sw st"></i>Sesi II</button>
+          <span class="lg ma-key"><i class="sw ma"></i>Rata-rata</span>
+        </div>
+      </div>
+      <div class="hero">
+        <div class="hero-main">
+          <span class="hero-label">Harga BBCA — terkini</span>
+          <div class="hero-row">
+            <span class="hero-num" id="revToday" data-raw="0">Rp 0</span>
+            <span id="heroDelta"></span>
+          </div>
+        </div>
+        <div class="hero-sep"></div>
+        <div class="hero-stat">
+          <span class="hero-label">Volume hari ini (lembar)</span><span class="hero-mid" id="ordToday">0</span>
+        </div>
+        <div class="hero-stat"><span class="hero-label">Update kutipan sesi</span><span class="hero-mid" id="sessTx">0</span>
+        </div>
+        <div class="hero-stat"><span class="hero-label">Puncak nilai transaksi</span><span class="hero-mid" id="peakDay">—</span>
+        </div>
+      </div>
+      <div class="chart-wrap" id="chartWrap">
+        <svg id="chartSvg" role="img" aria-label="Grafik pendapatan harian"></svg>
+        <div class="tip" id="chartTip"></div>
+      </div>
+    </section>
+
+    <!-- 02 · Ringkasan periode -->
+    <aside class="panel kpi-col">
+      <div class="panel-head"><span class="pnum">02</span>
+        <h2>Ringkasan Periode</h2>
+      </div>
+      <div class="kpi">
+        <div class="kpi-top"><span class="kpi-label">Nilai transaksi periode</span><span id="dRev"></span></div>
+        <div class="kpi-bot"><span class="kpi-value" id="kRev" data-raw="0">Rp 0</span>
+          <svg class="spark" id="spRev" viewBox="0 0 90 30" width="90" height="30"></svg>
+        </div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-top"><span class="kpi-label">Total volume (lembar)</span><span id="dOrd"></span></div>
+        <div class="kpi-bot"><span class="kpi-value" id="kOrd" data-raw="0">0</span>
+          <svg class="spark" id="spOrd" viewBox="0 0 90 30" width="90" height="30"></svg>
+        </div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-top"><span class="kpi-label">Harga penutupan</span><span id="dAov"></span></div>
+        <div class="kpi-bot"><span class="kpi-value" id="kAov" data-raw="0">Rp 0</span>
+          <svg class="spark" id="spAov" viewBox="0 0 90 30" width="90" height="30"></svg>
+        </div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-top"><span class="kpi-label">Porsi Sesi I</span><span id="dCnv"></span></div>
+        <div class="kpi-bot"><span class="kpi-value" id="kCnv" data-raw="0">0%</span>
+          <svg class="spark" id="spCnv" viewBox="0 0 90 30" width="90" height="30"></svg>
+        </div>
+      </div>
+    </aside>
+
+    <!-- 03 · Produk terlaris -->
+    <section class="panel panel-products">
+      <div class="panel-head"><span class="pnum">03</span>
+        <h2>Saham Bank Teraktif</h2>
+      </div>
+      <div id="prodList"></div>
+    </section>
+
+    <!-- 04 · Wilayah -->
+    <section class="panel panel-regions">
+      <div class="panel-head"><span class="pnum">04</span>
+        <h2>Komposisi Sesi</h2>
+      </div>
+      <div id="regionList"></div>
+    </section>
+
+    <!-- 05 · Transaksi langsung -->
+    <section class="panel panel-feed">
+      <div class="panel-head">
+        <span class="pnum">05</span>
+        <h2>Kutipan Langsung</h2>
+        <div class="head-extra">
+          <button class="btn-pause" id="pauseBtn"></button>
+        </div>
+      </div>
+      <div class="feed-list" id="feedList"></div>
+    </section>
+  </main>
+
+  <footer>
+    <span>BCA IDX LIVE MARKET CONSOLE — data live Yahoo Finance · BBCA.JK + saham bank · nilai = estimasi harga × volume</span>
+    <span>HOVER GRAFIK · GANTI PERIODE (HARI BURSA) · EKSPOR CSV / XLSX</span>
+  </footer>
+
+  <div id="toasts"></div>
+
+  <script src="src/app/build-excel.js"></script>
+  <script src="src/app/build-csv.js"></script>
+  <script src="src/app/main.js"></script>
+</body>
+
+</html>
